@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CloverCode.iml" filepath="$PROJECT_DIR$/CloverCode.iml" />
       <module fileurl="file://$PROJECT_DIR$/hello/hello.iml" filepath="$PROJECT_DIR$/hello/hello.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tools/tools.iml" filepath="$PROJECT_DIR$/tools/tools.iml" />
     </modules>
   </component>
 </project>
