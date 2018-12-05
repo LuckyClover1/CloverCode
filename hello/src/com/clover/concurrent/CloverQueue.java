@@ -2,13 +2,15 @@ package com.clover.concurrent;
 
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class CloverQueue {
     private static int DEFAULT_LENGTH = 10;
     private final LinkedList<Message> queue = new LinkedList<>();
     public void offer(Message o){
         synchronized(queue) {
-            if (queue.size() >= DEFAULT_LENGTH) {
+            while (queue.size() >= DEFAULT_LENGTH) {
                 try {
                     queue.wait();
                 } catch (InterruptedException e) {
@@ -17,13 +19,13 @@ public class CloverQueue {
             }
             System.out.println("offer Message " + o.getId());
             queue.addLast(o);
-            queue.notify();
+            queue.notifyAll();
         }
     }
 
     public Message take(){
         synchronized(queue) {
-            if (queue.isEmpty()) {
+            while (queue.isEmpty()) {
                 try {
                     queue.wait();
                 } catch (InterruptedException e) {
@@ -31,7 +33,7 @@ public class CloverQueue {
                 }
             }
             Message o = queue.pollFirst();
-            queue.notify();
+            queue.notifyAll();
             System.out.println("take message "+ o.getId());
             return o;
         }
@@ -39,13 +41,13 @@ public class CloverQueue {
 
     public static void main(String[] args) {
         CloverQueue cloverQueue = new CloverQueue();
-        new Thread(()->{
+        IntStream.range(0,2).mapToObj(in->new Thread(()->{
             for(int i=0;i<100;i++){
                 cloverQueue.offer(new Message(i));
             }
-        }).start();
+        })).forEach(Thread::start);
 
-        new Thread(()->{
+        IntStream.range(0,2).mapToObj(in->new Thread(()->{
             for(;;){
                 Message m = (Message) cloverQueue.take();
                 try {
@@ -54,7 +56,7 @@ public class CloverQueue {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        })).forEach(Thread::start);
     }
 }
 class Message{
