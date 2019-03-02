@@ -1,4 +1,4 @@
-package com.clover.tools;
+package com.clover.common.base;
 
 
 import java.io.*;
@@ -13,6 +13,7 @@ public abstract class BaseEntity implements Serializable{
      * 子类可直接调用实现深度克隆<br/>
      * @return BaseEntity 返回后强制格转
      */
+    @Override
     public BaseEntity clone(){
         try {
             ByteArrayOutputStream dataStream = new ByteArrayOutputStream();

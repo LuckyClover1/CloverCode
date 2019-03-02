@@ -7,6 +7,31 @@
     <groupId>groupId</groupId>
     <artifactId>tools</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>dsp-collection</groupId>
+            <artifactId>dsp-collection</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}\lib\dsp-collection.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>server</groupId>
+            <artifactId>server</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}\lib\server.jar</systemPath>
+        </dependency>
+    </dependencies>
 
 </project>
